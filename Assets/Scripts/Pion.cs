@@ -76,4 +76,16 @@ public class Pion : PieceAbstract
         }
         return positionsPossibles;
     }
+
+    public override int[,] GetVecteursPossibles()
+    {
+        // On n'utilise jamais cette méthode pour la classe Pion
+        return null;
+    }
+
+    public override int Distance()
+    {
+        // On n'utilise jamais cette méthode pour la classe Pion
+        return 0;
+    }
 }

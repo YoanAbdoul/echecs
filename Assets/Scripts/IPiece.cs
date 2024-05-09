@@ -10,5 +10,6 @@ public interface IPiece
     public bool Equals(object obj);
     public bool PositionPriseAllie(Coordonnees coordonneesFutures, List<IPiece> listePieces);
     public bool PositionPrise(Coordonnees coordonneesFutures, List<IPiece> listePieces);
+    public int[,] GetVecteursPossibles();
 }
 

@@ -11,7 +11,6 @@ public class GameControleur : MonoBehaviour
     private List<IPiece> pieces;
     public Sprite[] spritesPieces;
 
-
     void Start ()
     {
         this.estTourBlanc = true;
@@ -60,15 +59,15 @@ public class GameControleur : MonoBehaviour
     private Coordonnees GetCoordonneesClick()
     {
         // Convertir les coordonnées de la souris en coordonnées du monde
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = Camera.main.nearClipPlane; // Distance par rapport à la caméra (z = 0 au niveau du plan de la caméra)
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.nearClipPlane; // Distance par rapport à la caméra (z = 0 au niveau du plan de la caméra)
 
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-            int x = (int)Math.Round(worldPos.x * 0.75)+3;
-            int y = (int)Math.Round(worldPos.y * 0.75)+3;
+        int x = (int)Math.Round(worldPos.x * 0.75)+3;
+        int y = (int)Math.Round(worldPos.y * 0.75)+3;
 
-            return new Coordonnees(x,y);
+        return new Coordonnees(x,y);
     }
 
     private void InitialiserLesPieces()

@@ -14,15 +14,42 @@ public abstract class PieceAbstract : MonoBehaviour, IPiece
         this.transform.position = new Vector3(x,y,0f);
         this.transform.rotation = Quaternion.identity;
     }
+
     public void SetEstBlanc(bool estBlanc)
     {
         this.estBlanc = estBlanc;
     }
-    public abstract List<Coordonnees> PositionsPossibles(List<IPiece> listePieces);
+
+    public virtual List<Coordonnees> PositionsPossibles(List<IPiece> listePieces)
+    {
+        List<Coordonnees> positionsPossibles = new List<Coordonnees>();
+        int abscisseDeBase = this.GetCoordonnees().GetAbscisse();
+        int ordonneeDeBase = this.GetCoordonnees().GetOrdonnee();
+        int[,] vecteursPossibles = this.GetVecteursPossibles();
+        for(int j = 0; j < vecteursPossibles.GetLength(0); j++)
+        {
+            for(int i = 1; i < this.Distance()+1; i++)
+            {
+                Coordonnees endroitPossible = new Coordonnees(abscisseDeBase + (vecteursPossibles[j,0]*i), ordonneeDeBase + (vecteursPossibles[j,1]*i));
+                if(endroitPossible.GetAbscisse() >= 0 && endroitPossible.GetAbscisse() <= 7
+                && endroitPossible.GetOrdonnee() >= 0 && endroitPossible.GetOrdonnee() <= 7
+                && !this.PositionPriseAllie(endroitPossible, listePieces))
+                {
+                    positionsPossibles.Add(endroitPossible);
+                }
+            }
+        }
+        return positionsPossibles;
+    }
+
+    public abstract int[,] GetVecteursPossibles();
+    public abstract int Distance();
+
     public Coordonnees GetCoordonnees()
     {
         return this.coordonnees; 
     }
+    
     public bool EstBlanc()
     {
         return this.estBlanc;
