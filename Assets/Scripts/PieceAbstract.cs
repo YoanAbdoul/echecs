@@ -27,6 +27,38 @@ public abstract class PieceAbstract : MonoBehaviour, IPiece
     {
         return this.estBlanc;
     }
+
+    public bool PositionPriseAllie(Coordonnees coordonneesFutures, List<IPiece> listePieces)
+    {
+        bool result = false;
+        int i = 0;
+        while(!result && i < listePieces.Count)
+        {
+            if(this.EstBlanc() == listePieces[i].EstBlanc()
+            && coordonneesFutures.Equals(listePieces[i].GetCoordonnees()))
+            {
+                result = true;
+            }
+            i++;
+        }
+        return result;
+    }
+
+    public bool PositionPrise(Coordonnees coordonneesFutures, List<IPiece> listePieces)
+    {
+        bool result = false;
+        int i = 0;
+        while(!result && i < listePieces.Count)
+        {
+            if(coordonneesFutures.Equals(listePieces[i].GetCoordonnees()))
+            {
+                result = true;
+            }
+            i++;
+        }
+        return result;
+    }
+
     public override bool Equals(object obj)
     {
         if (obj == null || GetType() != obj.GetType())

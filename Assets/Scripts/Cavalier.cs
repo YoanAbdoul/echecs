@@ -25,7 +25,8 @@ public class Cavalier : PieceAbstract
             Coordonnees endroitPossible = new Coordonnees(abscisse, ordonnee);
             if(!this.GetCoordonnees().Equals(endroitPossible) 
             && abscisse >= 0 && abscisse <= 7
-            && ordonnee >= 0 && ordonnee <= 7)
+            && ordonnee >= 0 && ordonnee <= 7
+            && !this.PositionPriseAllie(endroitPossible, listePieces))
             {
                 positionsPossibles.Add(endroitPossible);
             }

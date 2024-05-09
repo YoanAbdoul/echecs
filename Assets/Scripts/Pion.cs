@@ -11,24 +11,26 @@ public class Pion : PieceAbstract
         int ordonneeDeBase = this.GetCoordonnees().GetOrdonnee();
         if(this.estBlanc)
         {
-            if(this.GetCoordonnees().GetOrdonnee() == 1)
+            if(this.GetCoordonnees().GetOrdonnee() == 1
+            && !this.PositionPrise(new Coordonnees(abscisseDeBase, ordonneeDeBase+2), listePieces))
             {
-                positionsPossibles.Add(new Coordonnees(abscisseDeBase, 2));
-                positionsPossibles.Add(new Coordonnees(abscisseDeBase, 3));
+                positionsPossibles.Add(new Coordonnees(abscisseDeBase, ordonneeDeBase+1));
+                positionsPossibles.Add(new Coordonnees(abscisseDeBase, ordonneeDeBase+2));
             }
-            else
+            else if(!this.PositionPrise(new Coordonnees(abscisseDeBase, ordonneeDeBase+1), listePieces))
             {
                 positionsPossibles.Add(new Coordonnees(abscisseDeBase, ordonneeDeBase+1));
             }
         }
         else
         {
-            if(this.GetCoordonnees().GetOrdonnee() == 6)
+            if(this.GetCoordonnees().GetOrdonnee() == 6
+            && !this.PositionPrise(new Coordonnees(abscisseDeBase, ordonneeDeBase-2), listePieces))
             {
-                positionsPossibles.Add(new Coordonnees(abscisseDeBase, 5));
-                positionsPossibles.Add(new Coordonnees(abscisseDeBase, 4));
+                positionsPossibles.Add(new Coordonnees(abscisseDeBase, ordonneeDeBase-1));
+                positionsPossibles.Add(new Coordonnees(abscisseDeBase, ordonneeDeBase-2));
             }
-            else
+            else if(!this.PositionPrise(new Coordonnees(abscisseDeBase, ordonneeDeBase-1), listePieces))
             {
                 positionsPossibles.Add(new Coordonnees(abscisseDeBase, ordonneeDeBase-1));
             }

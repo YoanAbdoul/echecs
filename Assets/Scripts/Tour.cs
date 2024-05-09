@@ -12,7 +12,8 @@ public class Tour : PieceAbstract
         {
             int ordonnee = i;
             Coordonnees coordonnees = new Coordonnees(abscisseDeBase, ordonnee);
-            if(!this.GetCoordonnees().Equals(coordonnees))
+            if(!this.GetCoordonnees().Equals(coordonnees)
+            && !this.PositionPriseAllie(coordonnees, listePieces))
             {
                 positionsPossibles.Add(coordonnees);
             }
@@ -21,7 +22,8 @@ public class Tour : PieceAbstract
         {
             int abscisse = i;
             Coordonnees coordonnees = new Coordonnees(abscisse, ordonneeDeBase);
-            if(!this.GetCoordonnees().Equals(coordonnees))
+            if(!this.GetCoordonnees().Equals(coordonnees)
+            && !this.PositionPriseAllie(coordonnees, listePieces))
             {
                 positionsPossibles.Add(coordonnees);
             }

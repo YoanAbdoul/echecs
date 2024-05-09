@@ -15,7 +15,8 @@ public class Roi : PieceAbstract
                 Coordonnees coordonnees = new Coordonnees(abscisse, ordonnee);
                 if(!this.GetCoordonnees().Equals(coordonnees) 
                 && abscisse >= 0 && ordonnee <= 7
-                && abscisse >= 0 && ordonnee <= 7)
+                && abscisse >= 0 && ordonnee <= 7
+                && !this.PositionPriseAllie(coordonnees, listePieces))
                 {
                     positionsPossibles.Add(coordonnees);
                 }
