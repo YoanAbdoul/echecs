@@ -1,3 +1,7 @@
+# Version 0.12
+
+- Gérer la collision des pièces du même camp. 
+
 # Version 0.11
 
 - Les pièces de la même couleur ne peuvent plus se superposer. 
