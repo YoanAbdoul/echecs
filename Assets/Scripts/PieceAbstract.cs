@@ -31,9 +31,20 @@ public abstract class PieceAbstract : MonoBehaviour, IPiece
             for(int i = 1; i < this.Distance()+1; i++)
             {
                 Coordonnees endroitPossible = new Coordonnees(abscisseDeBase + (vecteursPossibles[j,0]*i), ordonneeDeBase + (vecteursPossibles[j,1]*i));
-                if(endroitPossible.GetAbscisse() >= 0 && endroitPossible.GetAbscisse() <= 7
-                && endroitPossible.GetOrdonnee() >= 0 && endroitPossible.GetOrdonnee() <= 7
-                && !this.PositionPriseAllie(endroitPossible, listePieces))
+                if(endroitPossible.GetAbscisse() < 0 || endroitPossible.GetAbscisse() > 7
+                || endroitPossible.GetOrdonnee() < 0 || endroitPossible.GetOrdonnee() > 7
+                || this.PositionPriseAllie(endroitPossible, listePieces))
+                {
+                    // si on collisionne avec les bords ou avec une pièce alliée on arrête de regarder dans cette direction
+                    break;
+                }
+                else if(this.PositionPriseEnnemi(endroitPossible, listePieces))
+                {
+                    // si on collisionne avec  une pièce ennemie, on ajoute la position, puis on arrête de regarder dans cette direction
+                    positionsPossibles.Add(endroitPossible);
+                    break;
+                }
+                else
                 {
                     positionsPossibles.Add(endroitPossible);
                 }
@@ -49,7 +60,7 @@ public abstract class PieceAbstract : MonoBehaviour, IPiece
     {
         return this.coordonnees; 
     }
-    
+
     public bool EstBlanc()
     {
         return this.estBlanc;
@@ -62,6 +73,22 @@ public abstract class PieceAbstract : MonoBehaviour, IPiece
         while(!result && i < listePieces.Count)
         {
             if(this.EstBlanc() == listePieces[i].EstBlanc()
+            && coordonneesFutures.Equals(listePieces[i].GetCoordonnees()))
+            {
+                result = true;
+            }
+            i++;
+        }
+        return result;
+    }
+
+    public bool PositionPriseEnnemi(Coordonnees coordonneesFutures, List<IPiece> listePieces)
+    {
+        bool result = false;
+        int i = 0;
+        while(!result && i < listePieces.Count)
+        {
+            if(this.EstBlanc() != listePieces[i].EstBlanc()
             && coordonneesFutures.Equals(listePieces[i].GetCoordonnees()))
             {
                 result = true;

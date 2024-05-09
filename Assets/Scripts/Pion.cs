@@ -80,12 +80,15 @@ public class Pion : PieceAbstract
     public override int[,] GetVecteursPossibles()
     {
         // On n'utilise jamais cette méthode pour la classe Pion
-        return null;
+        Debug.LogError("La fonction GetVecteursPossibles() de la classe Pion ne devrait pas être utilisé");
+        int[,] vecteursPossibles = new int[0,0];
+        return vecteursPossibles;
     }
 
     public override int Distance()
     {
         // On n'utilise jamais cette méthode pour la classe Pion
+        Debug.LogError("La fonction Distance() de la classe Pion ne devrait pas être utilisé");
         return 0;
     }
 }
