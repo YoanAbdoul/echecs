@@ -1,3 +1,7 @@
+# Version 0.13
+
+- Les pièces peuvent prendre les pièces ennemies. 
+
 # Version 0.12
 
 - Gérer la collision des pièces du même camp. 
