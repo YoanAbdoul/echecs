@@ -48,6 +48,7 @@ public class GameControleur : MonoBehaviour
                             }
                         }
                     }
+                    // On déplace la pièce à l'endroit voulue et on passe au tour de l'adversaire
                     this.pieceSelectionnee.SetCoordonnees(coordonnees);
                     this.pieceSelectionnee = null;
                     this.estTourBlanc = !this.estTourBlanc;
@@ -107,9 +108,10 @@ public class GameControleur : MonoBehaviour
         Coordonnees coordonnees;
         SpriteRenderer spriteRenderer;
 
-        // Création des pions 
+        // Création pour les blancs et les noirs
         for(int j = 0; j < 2; j++)
         {
+            // Création des pions 
             for(int i = 0; i < 8; i++)
             {
                 nouvellePiece = new GameObject("Pion"+(j==0?"Blanc":"Noir")+i);
@@ -122,10 +124,6 @@ public class GameControleur : MonoBehaviour
                 this.pieces.Add(pion);
                 this.piecesObjets.Add(nouvellePiece);
             }
-        }
-        // Création du reste
-        for(int j = 0; j < 2; j++)
-        {
             // Création des tours
             for(int i = 0; i < 2; i++)
             {
