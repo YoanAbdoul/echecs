@@ -1,3 +1,7 @@
+# Version 0.14
+
+- Ajouter la possibilité d’annuler la sélection d’une pièce. 
+
 # Version 0.13
 
 - Les pièces peuvent prendre les pièces ennemies. 
