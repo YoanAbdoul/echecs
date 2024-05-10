@@ -1,3 +1,7 @@
+# Version 0.15
+
+- Ajouter un effet visible pour savoir quelle pièce est sélectionnée. 
+
 # Version 0.14
 
 - Ajouter la possibilité d’annuler la sélection d’une pièce. 
