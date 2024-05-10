@@ -30,6 +30,7 @@ public class GameControleur : MonoBehaviour
             // Si une pièce est déjà sélectionnée
             if(this.pieceSelectionnee != null)
             {
+                // On regarde si elle peut se déplacer à l'endroit voulu
                 if(this.pieceSelectionnee.PositionsPossibles(this.pieces).Contains(coordonnees))
                 {
                     // On regarde si une pièce ennemie est aux coordonnees, si c'est le cas, elle est détruite
@@ -51,7 +52,13 @@ public class GameControleur : MonoBehaviour
                     this.pieceSelectionnee = null;
                     this.estTourBlanc = !this.estTourBlanc;
                 }
+                // On regarde si le joueur click sur la même pièce pour la déselectionner
+                else if(this.pieceSelectionnee.GetCoordonnees().Equals(coordonnees))
+                {
+                    this.pieceSelectionnee = null;
+                }
             }
+            // Si aucune pièce est sélectionnée
             else
             {
                 // On regarde quel pièce est à cette endroit 
