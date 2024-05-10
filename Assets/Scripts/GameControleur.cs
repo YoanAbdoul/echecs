@@ -10,6 +10,7 @@ public class GameControleur : MonoBehaviour
     private List<GameObject> piecesObjets;
     private List<IPiece> pieces;
     public Sprite[] spritesPieces;
+    public GameObject caseSelection;
 
     void Start ()
     {
@@ -18,6 +19,7 @@ public class GameControleur : MonoBehaviour
         this.piecesObjets = new List<GameObject>();
         this.pieces = new List<IPiece>();
         this.InitialiserLesPieces();
+        this.caseSelection.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     void Update()
@@ -52,11 +54,13 @@ public class GameControleur : MonoBehaviour
                     this.pieceSelectionnee.SetCoordonnees(coordonnees);
                     this.pieceSelectionnee = null;
                     this.estTourBlanc = !this.estTourBlanc;
+                    this.caseSelection.GetComponent<SpriteRenderer>().enabled = false;
                 }
                 // On regarde si le joueur click sur la même pièce pour la déselectionner
                 else if(this.pieceSelectionnee.GetCoordonnees().Equals(coordonnees))
                 {
                     this.pieceSelectionnee = null;
+                    this.caseSelection.GetComponent<SpriteRenderer>().enabled = false;
                 }
             }
             // Si aucune pièce est sélectionnée
@@ -64,6 +68,11 @@ public class GameControleur : MonoBehaviour
             {
                 // On regarde quel pièce est à cette endroit 
                 this.pieceSelectionnee = this.GetPieceAuxCoordonneesEtCouleur(coordonnees, this.estTourBlanc);
+                if(this.pieceSelectionnee != null)
+                {
+                    this.caseSelection.transform.position = new Vector3((coordonnees.GetAbscisse()-3)/0.75f,(coordonnees.GetOrdonnee()-3)/0.75f,0.5f);
+                    this.caseSelection.GetComponent<SpriteRenderer>().enabled = true;
+                }
             }
         }
     }
