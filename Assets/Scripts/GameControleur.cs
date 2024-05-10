@@ -24,6 +24,7 @@ public class GameControleur : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) // Vérifie si le bouton gauche de la souris est enfoncé
         {
+            // On enregistre les coordonnées du click du joueur
             Coordonnees coordonnees = this.GetCoordonneesClick();
 
             // Si une pièce est déjà sélectionnée
@@ -31,6 +32,21 @@ public class GameControleur : MonoBehaviour
             {
                 if(this.pieceSelectionnee.PositionsPossibles(this.pieces).Contains(coordonnees))
                 {
+                    // On regarde si une pièce ennemie est aux coordonnees, si c'est le cas, elle est détruite
+                    IPiece pieceAdverse = this.GetPieceAuxCoordonneesEtCouleur(coordonnees, !this.estTourBlanc);
+                    if(pieceAdverse != null)
+                    {
+                        for(int i = 0; i < this.piecesObjets.Count; i++)
+                        {
+                            GameObject pieceObjet = this.piecesObjets[i];
+                            if(pieceObjet.GetComponent<IPiece>() == pieceAdverse)
+                            {
+                                this.pieces.RemoveAt(i);
+                                this.piecesObjets.RemoveAt(i);
+                                Destroy(pieceObjet);
+                            }
+                        }
+                    }
                     this.pieceSelectionnee.SetCoordonnees(coordonnees);
                     this.pieceSelectionnee = null;
                     this.estTourBlanc = !this.estTourBlanc;
@@ -38,22 +54,29 @@ public class GameControleur : MonoBehaviour
             }
             else
             {
-                // On regarde quel pièce est à cette endorit 
-                bool pieceTrouve = false;
-                int i = 0;
-                while(!pieceTrouve && i < this.pieces.Count)
-                {
-                    IPiece piece = this.pieces[i];
-                    if(piece.GetCoordonnees().Equals(coordonnees)
-                    && piece.EstBlanc() == this.estTourBlanc)
-                    {
-                        this.pieceSelectionnee = piece;
-                        pieceTrouve = true;
-                    }
-                    i++;
-                }
+                // On regarde quel pièce est à cette endroit 
+                this.pieceSelectionnee = this.GetPieceAuxCoordonneesEtCouleur(coordonnees, this.estTourBlanc);
             }
         }
+    }
+
+    private IPiece GetPieceAuxCoordonneesEtCouleur(Coordonnees coordonnees, bool estBlanc)
+    {
+        IPiece pieceChoisie = null;
+        bool pieceTrouve = false;
+        int i = 0;
+        while(!pieceTrouve && i < this.pieces.Count)
+        {
+            IPiece piece = this.pieces[i];
+            if(piece.GetCoordonnees().Equals(coordonnees)
+            && piece.EstBlanc() == estBlanc)
+            {
+                pieceChoisie = piece;
+                pieceTrouve = true;
+            }
+            i++;
+        }
+        return pieceChoisie;
     }
 
     private Coordonnees GetCoordonneesClick()
@@ -72,34 +95,30 @@ public class GameControleur : MonoBehaviour
 
     private void InitialiserLesPieces()
     {
-        // affecter à toutes les pièces des coordonnées
+        // affecter à toutes les pièces à leurs coordonnées et sprites respectives
+        GameObject nouvellePiece;
+        Coordonnees coordonnees;
+        SpriteRenderer spriteRenderer;
 
         // Création des pions 
         for(int j = 0; j < 2; j++)
         {
             for(int i = 0; i < 8; i++)
             {
-                GameObject nouvellePiece = new GameObject("Pion"+(j==0?"Blanc":"Noir")+i);
+                nouvellePiece = new GameObject("Pion"+(j==0?"Blanc":"Noir")+i);
                 Pion pion = nouvellePiece.AddComponent<Pion>();
-                Coordonnees coordonnees = new Coordonnees(i,j==0?1:6);
+                coordonnees = new Coordonnees(i,j==0?1:6);
                 pion.SetCoordonnees(coordonnees);
                 pion.SetEstBlanc(j==0);
-                SpriteRenderer spriteRenderer = nouvellePiece.AddComponent<SpriteRenderer>();
+                spriteRenderer = nouvellePiece.AddComponent<SpriteRenderer>();
                 spriteRenderer.sprite = spritesPieces[j==0?5:11];
                 this.pieces.Add(pion);
                 this.piecesObjets.Add(nouvellePiece);
             }
         }
-
-        
-
         // Création du reste
         for(int j = 0; j < 2; j++)
         {
-            GameObject nouvellePiece;
-            Coordonnees coordonnees;
-            SpriteRenderer spriteRenderer;
-
             // Création des tours
             for(int i = 0; i < 2; i++)
             {
